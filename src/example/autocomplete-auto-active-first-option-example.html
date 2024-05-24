@@ -1,0 +1,35 @@
+<div [formGroup]="form">
+  <div formArrayName="optionsArray">
+    <div *ngFor="let control of optionsArray.controls; let i = index">
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          [formControlName]="i"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredOptions[i] | async"
+            [value]="option.name"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<button mat-raised-button color="primary" (click)="addOption()">
+  Add Option
+</button>
+
+<!-- @Input() options: Option[] = [];
+  @Output() selectedOptionsChange = new EventEmitter<{ name: string, value: string }[]>();
+  
+  <app-dynamic-autocomplete [options]="options" (selectedOptionsChange)="onSelectedOptionsChanged($event)"></app-dynamic-autocomplete>
+
+    onSelectedOptionsChanged(selectedOptions: { name: string, value: string }[]) {
+    console.log('Selected options:', selectedOptions);
+  }
+-->
